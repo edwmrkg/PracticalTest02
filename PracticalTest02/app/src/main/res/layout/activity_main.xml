@@ -17,7 +17,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/portButton"
+                android:id="@+id/portText"
                 android:layout_width="264dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
