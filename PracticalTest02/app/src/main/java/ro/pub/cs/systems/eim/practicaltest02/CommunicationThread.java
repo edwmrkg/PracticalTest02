@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -53,18 +54,18 @@ public class CommunicationThread extends Thread {
             else
             {
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(WebService + currency + ".json");
+                HttpGet httpPost = new HttpGet(WebService + currency + ".json");
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 String pageSourceCode = httpClient.execute(httpPost, responseHandler);
                 if (pageSourceCode == null)
                     return;
 
-                Document document = Jsoup.parse(pageSourceCode);
-                Elements preElements = document.getElementsByTag("pre");
-                for (Element el : preElements) {
-                    String elString = el.data();
-                    if (elString.contains("bpi")) {
-                        JSONObject json = new JSONObject(elString);
+//                Document document = Jsoup.parse(pageSourceCode);
+//                Elements preElements = document.getElementsByTag("pre");
+//                for (Element el : preElements) {
+//                    String elString = el.data();
+//                    if (elString.contains("bpi")) {
+                        JSONObject json = new JSONObject(pageSourceCode);
                         JSONObject bpi = json.getJSONObject("bpi");
                         JSONObject ccy = bpi.getJSONObject(currency);
                         String rate = ccy.getString("rate");
@@ -74,9 +75,8 @@ public class CommunicationThread extends Thread {
 
                         rateInfo = new BitcoinRateInfo(currency, updated, rate);
                         serverThread.setData(currency, rateInfo);
-                        break;
-                    }
-                }
+//                    }
+//                }
             }
 
             if (rateInfo == null)
