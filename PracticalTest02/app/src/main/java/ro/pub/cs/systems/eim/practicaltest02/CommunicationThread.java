@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ResponseCache;
 import java.net.Socket;
 import java.util.HashMap;
 import org.apache.http.client.HttpClient;
@@ -51,7 +50,8 @@ public class CommunicationThread extends Thread {
             if (data.containsKey(currency)) {
                 rateInfo = data.get(currency);
             }
-            else {
+            else
+            {
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(WebService + currency + ".json");
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();

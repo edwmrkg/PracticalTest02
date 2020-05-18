@@ -12,7 +12,7 @@ public class ServerThread extends Thread {
     private ServerSocket serverSocket;
     private boolean isRunning;
     private int port;
-    HashMap<String, BitcoinRateInfo> data;
+    HashMap<String, BitcoinRateInfo> data = new  HashMap<String, BitcoinRateInfo>();
 
     public ServerThread(int port) {
         this.port = port;
